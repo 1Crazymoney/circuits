@@ -1,14 +1,16 @@
 include "../../node_modules/circomlib/circuits/poseidon.circom";
 include "../../node_modules/circomlib/circuits/bitify.circom";
+include "../../node_modules/circomlib/circuits/switcher.circom";
 
 
-template MerkleTree(n_levels) {
+template MerkleProof(n_levels) {
     signal input leaf;
     signal input pathIndices; //bitify it to know separate indices
     signal input pathElements[n_levels];
     signal output root;
 
     component hashers[n_levels];
+    component switchers[n_levels];
     component index = Num2Bits(n_levels);
     index.in <== pathIndices;
 
@@ -16,9 +18,13 @@ template MerkleTree(n_levels) {
     levelHash = leaf;
 
     for (var i = 0; i < n_levels; i++) {
+        switchers[i] = Switcher();
+        switchers[i].L <== levelHash;
+        switchers[i].R <== pathElements[i];
+        switchers[i].sel <== index.out[i];
         hashers[i] = Poseidon(2);
-        hashers[i].inputs[0] <== index.out[i]*(pathElements[i] - levelHash) + levelHash;
-        hashers[i].inputs[1] <== index.out[i]*(levelHash - pathElements[i]) + pathElements[i];
+        hashers[i].inputs[0] <== switchers[i].outL;
+        hashers[i].inputs[1] <== switchers[i].outR;
         levelHash = hashers[i].out;
     }
     root <== levelHash;

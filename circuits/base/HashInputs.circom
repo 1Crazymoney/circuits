@@ -1,16 +1,15 @@
 include "../../node_modules/circomlib/circuits/sha256/sha256.circom";
 include "../../node_modules/circomlib/circuits/bitify.circom";
 
-template HashInputs(nInputs, mOutputs){
+template HashInputs(size){
 
-    var SIZE = 7 +nInputs + mOutputs
-    signal input in[SIZE];
+    signal input in[size];
     signal output out;
 
-    component n2b[SIZE];
-    component sha256 = Sha256(SIZE*256);
+    component n2b[size];
+    component sha256 = Sha256(size*256);
 
-    for(var i=0; i<SIZE; i++){
+    for(var i=0; i<size; i++){
         n2b[i] = Num2Bits(256);
         n2b[i].in <== in[i];
         for(var j=0; j<256; j++)

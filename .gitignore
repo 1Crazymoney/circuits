@@ -5,5 +5,5 @@ package-lock.json
 *.zkey
 *.wasm
 verif*
-
-
+build/vkey_large.json
+build/vkey_small.json

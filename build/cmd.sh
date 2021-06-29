@@ -1,26 +1,16 @@
 #! /bin/bash
-if [ ! -f "potfinal.ptau" ]; then
-snarkjs powersoftau new bn128 20 pot0.ptau -v
-snarkjs powersoftau contribute pot0.ptau pot1.ptau --name="First contribution" -v -e="random text"
-snarkjs powersoftau contribute pot1.ptau pot2.ptau --name="Second contribution" -v -e="some random text"
-snarkjs powersoftau beacon pot2.ptau potbeacon.ptau 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon"
-snarkjs powersoftau prepare phase2 potbeacon.ptau potfinal.ptau -v
-fi
-
 circom ../circuits/Small.circom --r1cs --wasm -v
 snarkjs zkey new Small.r1cs potfinal.ptau tmp0.zkey
-snarkjs zkey contribute tmp0.zkey tmp1.zkey --name="1st Contributor Name" -v -e="more random text"
-snarkjs zkey contribute tmp1.zkey tmp2.zkey --name="Second contribution Name" -v -e="Another random entropy"
-snarkjs zkey beacon tmp2.zkey small_final.zkey 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon phase2"
+snarkjs zkey contribute tmp0.zkey tmp1.zkey --name="Bitcoin Cash Block 689000" -v -e="000000000000000001b1c5085327359337668c6093a80ed4920c8d4f335a5ba9"
+snarkjs zkey contribute tmp1.zkey tmp2.zkey --name="Bitcoin Block 689000" -v -e="0000000000000000000831ee26b770d8321e69aa4f2e390ba0367782a765ec6b"
+snarkjs zkey beacon tmp2.zkey small_final.zkey 4c742a8b7160d4cc58882d7e7dd11a6234d99e735d2bc12512d6564d1dafddfd 10 -n="Ethereum Block 12727000"
 snarkjs zkey export verificationkey small_final.zkey vkey_small.json
-snarkjs zkey export solidityverifier small_final.zkey verifier_small.sol
 rm tmp*
 
 circom ../circuits/Large.circom --r1cs --wasm -v
-snarkjs zkey new LArge.r1cs potfinal.ptau tmp0.zkey
-snarkjs zkey contribute tmp0.zkey tmp1.zkey --name="1st Contributor Name" -v -e="more random text"
-snarkjs zkey contribute tmp1.zkey tmp2.zkey --name="Second contribution Name" -v -e="Another random entropy"
-snarkjs zkey beacon tmp2.zkey large_final.zkey 0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 10 -n="Final Beacon phase2"
-snarkjs zkey export verificationkey large_final.zkey vkey_small.json
-snarkjs zkey export solidityverifier large_final.zkey verifier_large.sol
+snarkjs zkey new Large.r1cs potfinal.ptau tmp0.zkey
+snarkjs zkey contribute tmp0.zkey tmp1.zkey --name="Bitcoin Cash Block 689000" -v -e="000000000000000001b1c5085327359337668c6093a80ed4920c8d4f335a5ba9"
+snarkjs zkey contribute tmp1.zkey tmp2.zkey --name="Bitcoin Block 689000" -v -e="0000000000000000000831ee26b770d8321e69aa4f2e390ba0367782a765ec6b"
+snarkjs zkey beacon tmp2.zkey large_final.zkey 4c742a8b7160d4cc58882d7e7dd11a6234d99e735d2bc12512d6564d1dafddfd 10 -n="Ethereum Block 12727000"
+snarkjs zkey export verificationkey large_final.zkey vkey_large.json
 rm tmp*
