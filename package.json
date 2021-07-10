@@ -1,20 +1,9 @@
 {
-    "name": "rg-circuits",
+    "name": "circuits",
     "version": "1.0.0",
     "description": "Railgun zksnark circuits",
     "private": true,
-    "main": "index.js",
-    "scripts": {
-        "test": "mocha"
-    },
     "dependencies": {
-        "circom": "^0.5.38",
-        "circomlib": "^0.5.1",
-        "ethers": "^5.1.3",
-        "ffjavascript": "^0.2.35",
-        "snarkjs": "^0.3.59"
-    },
-    "devDependencies": {
-        "mocha": "^8.3.1"
+        "circomlib": "0.5.1"
     }
 }

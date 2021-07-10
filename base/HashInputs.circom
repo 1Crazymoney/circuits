@@ -1,5 +1,5 @@
-include "../../node_modules/circomlib/circuits/sha256/sha256.circom";
-include "../../node_modules/circomlib/circuits/bitify.circom";
+include "../node_modules/circomlib/circuits/sha256/sha256.circom";
+include "../node_modules/circomlib/circuits/bitify.circom";
 
 template HashInputs(size){
 

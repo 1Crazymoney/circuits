@@ -1,6 +1,6 @@
-include "../../node_modules/circomlib/circuits/poseidon.circom";
-include "../../node_modules/circomlib/circuits/bitify.circom";
-include "../../node_modules/circomlib/circuits/switcher.circom";
+include "../node_modules/circomlib/circuits/poseidon.circom";
+include "../node_modules/circomlib/circuits/bitify.circom";
+include "../node_modules/circomlib/circuits/switcher.circom";
 
 
 template MerkleProof(n_levels) {
